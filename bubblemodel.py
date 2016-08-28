@@ -1,6 +1,32 @@
 #We will assume that this is constant throughout the model.
-classesperstudent = 6
+teachers = [1,4,3,5,1,1,1,6,1,3,5]
+classesperstudent = 6.02244898
 #let us start out with a rotate function
+def roundvect(vect):
+        roundedvect = []
+        for val in vect:
+                roundedvect.append(round(val))
+        return roundedvect
+def roundmat(mat):
+        roundedmat = []
+        for row in mat:
+                current = []
+                for val in row:
+                        current.append(round(val))
+                roundedmat.append(current)
+        return roundedmat
+def writematrix(mat,filepath):
+        writefile = open(filepath,'w')
+        for row in mat:
+                for num in row:
+                        writefile.write(str(num) + ',')
+                writefile.write('\n')
+def teachersperstud(mat,teachers):
+        ratios = [0]*len(mat)
+        for i in range(len(mat)):
+                for j in range(len(mat[i])):
+                        ratios[i] += mat[i][j]/teachers[i]
+        return ratios
 def rotate(M,newstud):
         #M should be the class and year matrix, while newstud should be the
         #total number of students who will matriculate at the school next year
@@ -24,19 +50,19 @@ def rotate(M,newstud):
         #find the total number of students in each year
         studperyear = []
         for year in classperyear:
-                studperyear.append(round(year/classesperstudent))
+                studperyear.append(year/classesperstudent)
         #calculate the new number of students in each grade
-        newjuniors = round(.95*studperyear[0])
+        newjuniors = (.95*studperyear[0])
         newseniors = studperyear[1]
         newsophomores = newstud - studperyear[0] - studperyear[1]
         newm = M[:][:]
         #proportionally redistribute students based upon relative class frequencies
         for i in range(len(classfreqbyyear[0])):
-                newm[i][0] = round(newsophomores*classesperstudent*classfreqbyyear[0][i]) 
+                newm[i][0] = (newsophomores*classesperstudent*classfreqbyyear[0][i]) 
         for i in range(len(classfreqbyyear[1])):
-                newm[i][1] = round(newjuniors*classesperstudent*classfreqbyyear[1][i])
+                newm[i][1] = (newjuniors*classesperstudent*classfreqbyyear[1][i])
         for i in range(len(classfreqbyyear[2])):
-                newm[i][2] = round(newseniors*classesperstudent*classfreqbyyear[2][i])
+                newm[i][2] = (newseniors*classesperstudent*classfreqbyyear[2][i])
         return newm
 #we are starting out with 490 students
 totalstudents = 490
@@ -51,20 +77,12 @@ yearclasscounts = []
 for i in Matrixt:
         yearclasscounts.append(sum(i))
 #find the believed students per year
-#studentsperyear = yearclasscounts/classesperstudent
-#lets get these new students in there
-#start out by finding the relative frequencies of classes by year
-print(Matrix)
-yearclasscounts = []
-Matrixt = zip(*Matrix)
-for i in Matrixt:
-        yearclasscounts.append(sum(i))
-print(yearclasscounts)
-for i in range(3):
-        Matrix = rotate(Matrix,490)
-        Matrixt = zip(*Matrix)
-        yearclasscounts = []
-        for i in Matrixt:
-                yearclasscounts.append(sum(i))
-        print(yearclasscounts)
-print(Matrix)
+print(classes)
+print(roundvect(teachersperstud(Matrix,teachers)))
+Matrix = rotate(Matrix,690)
+print(roundvect(teachersperstud(Matrix,teachers)))
+Matrix = rotate(Matrix,690)
+print(roundvect(teachersperstud(Matrix,teachers)))
+Matrix = rotate(Matrix,690)
+print(roundvect(teachersperstud(Matrix,teachers)))
+
