@@ -77,12 +77,11 @@ yearclasscounts = []
 for i in Matrixt:
         yearclasscounts.append(sum(i))
 #find the believed students per year
+allvects = []
 print(classes)
-print(roundvect(teachersperstud(Matrix,teachers)))
-Matrix = rotate(Matrix,690)
-print(roundvect(teachersperstud(Matrix,teachers)))
-Matrix = rotate(Matrix,690)
-print(roundvect(teachersperstud(Matrix,teachers)))
-Matrix = rotate(Matrix,690)
-print(roundvect(teachersperstud(Matrix,teachers)))
-
+allvects.append(classes)
+for i in range(1000):
+        print(roundvect(teachersperstud(Matrix,teachers)))
+        Matrix = rotate(Matrix,690)
+        allvects.append(roundvect(teachersperstud(Matrix,teachers)))
+writematrix(allvects,'writefile.csv')
