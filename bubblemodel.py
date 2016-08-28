@@ -1,18 +1,19 @@
 #We will assume that this is constant throughout the model.
 teachers = [1,4,3,5,1,1,1,6,1,3,5]
+dumpfile = 'ec.csv'
 classesperstudent = 6.02244898
 #let us start out with a rotate function
 def roundvect(vect):
         roundedvect = []
         for val in vect:
-                roundedvect.append(round(val))
+                roundedvect.append(round(val+.5))
         return roundedvect
 def roundmat(mat):
         roundedmat = []
         for row in mat:
                 current = []
                 for val in row:
-                        current.append(round(val))
+                        current.append(round(val+.5))
                 roundedmat.append(current)
         return roundedmat
 def writematrix(mat,filepath):
@@ -54,7 +55,7 @@ def rotate(M,newstud):
         #calculate the new number of students in each grade
         newjuniors = (.95*studperyear[0])
         newseniors = studperyear[1]
-        newsophomores = newstud - studperyear[0] - studperyear[1]
+        newsophomores = newstud - newjuniors - newseniors
         newm = M[:][:]
         #proportionally redistribute students based upon relative class frequencies
         for i in range(len(classfreqbyyear[0])):
@@ -80,8 +81,28 @@ for i in Matrixt:
 allvects = []
 print(classes)
 allvects.append(classes)
+classes =     ['art','bio','che','eng','fre','ger','spa','mat','mus','phy','soc']
+newteachers = [  0,    1,    0,    2,    .4,    0,    .6,    1,    0,    1,    1]
+allvects.append(newteachers)
 for i in range(1000):
-        print(roundvect(teachersperstud(Matrix,teachers)))
-        Matrix = rotate(Matrix,690)
-        allvects.append(roundvect(teachersperstud(Matrix,teachers)))
-writematrix(allvects,'writefile.csv')
+        if(newteachers[4] == .6):
+                newteachers[4] = .4
+                newteachers[6] = .6
+        elif(newteachers[6] == 1):
+                newteachers[4] = .5
+                newteachers[6] = .5
+        else:
+                newteachers[4] = .6
+                newteachers[6] = .4
+        tempteachers = []
+        for i in range(len(teachers)):
+                tempteachers.append(teachers[i] + newteachers[i])
+        print(roundvect(teachersperstud(Matrix,tempteachers)))
+        Matrix = rotate(Matrix,630)
+        allvects.append(roundvect(teachersperstud(Matrix,tempteachers)))
+writematrix(allvects,dumpfile)
+x = 0
+for i in Matrix:
+        for j in i:
+                x += j
+print(x)
