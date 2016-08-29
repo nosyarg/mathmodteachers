@@ -100,6 +100,7 @@ for i in range(15):
         print(roundvect(teachersperstud(Matrix,tempteachers)))
         Matrix = rotate(Matrix,630)
         allvects.append(roundvect(teachersperstud(Matrix,tempteachers)))
+
 writematrix(allvects,dumpfile)
 x = 0
 for i in Matrix:
