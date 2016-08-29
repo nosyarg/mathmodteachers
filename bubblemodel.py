@@ -1,6 +1,6 @@
 #We will assume that this is constant throughout the model.
 teachers = [1,4,3,5,1,1,1,6,1,3,5]
-dumpfile = 'decrease.csv'
+dumpfile = 'increase.csv'
 classesperstudent = 6.02244898
 #let us start out with a rotate function
 def roundvect(vect):
@@ -82,7 +82,7 @@ allvects = []
 print(classes)
 allvects.append(classes)
 classes =     ['art','bio','che','eng','fre','ger','spa','mat','mus','phy','soc']
-newteachers = [  0,    0,    0,    0,    .4,    0,    .6,    0,    0,   0,    0]
+newteachers = [  2,    2,    2,    2,    .4,    2,    .6,    2,    2,   2,    2]
 allvects.append(newteachers)
 for i in range(15):
         if(newteachers[4] == .6):
