@@ -1,5 +1,6 @@
 #We will assume that this is constant throughout the model.
 teachers = [1,4,3,5,1,1,1,6,1,3,5]
+percentrandom = 0
 dumpfile = 'increase.csv'
 classesperstudent = 6.02244898
 #let us start out with a rotate function
@@ -37,6 +38,7 @@ def rotate(M,newstud):
         #note: I was feeling motivated
         #pull in the classes per student global
         global classesperstudent
+        global percentrandom
         #transpose the class matrix
         Mt = zip(*M)
         #find the total number of classes per year and their relative frequencies
@@ -48,6 +50,9 @@ def rotate(M,newstud):
                 for val in year:
                         currentclassfreqs.append(val/sum(year))
                 classfreqbyyear.append(currentclassfreqs)
+        for i in range(len(classfreqbyyear)):
+                for j in range(len(classfreqbyyear[i])):
+                        classfreqbyyear[i][j] = classfreqbyyear[i][j]/(1-percentrandom) + percentrandom/11 
         #find the total number of students in each year
         studperyear = []
         for year in classperyear:
@@ -82,18 +87,18 @@ allvects = []
 print(classes)
 allvects.append(classes)
 classes =     ['art','bio','che','eng','fre','ger','spa','mat','mus','phy','soc']
-newteachers = [  2,    2,    2,    2,    .4,    2,    .6,    2,    2,   2,    2]
+newteachers = [  2,    2,    2,    2,    2,    2,    2,    2,    2,    2,    2]
 allvects.append(newteachers)
 for i in range(15):
-        if(newteachers[4] == .6):
-                newteachers[4] = .4
-                newteachers[6] = .6
-        elif(newteachers[6] == 1):
-                newteachers[4] = .5
-                newteachers[6] = .5
-        else:
-                newteachers[4] = .6
-                newteachers[6] = .4
+        #if(newteachers[4] == .6):
+        #        newteachers[4] = .4
+        #        newteachers[6] = .6
+        #elif(newteachers[6] == 1):
+        #        newteachers[4] = .5
+        #        newteachers[6] = .5
+        #else:
+        #        newteachers[4] = .6
+        #        newteachers[6] = .4
         tempteachers = []
         for i in range(len(teachers)):
                 tempteachers.append(teachers[i] + newteachers[i])
